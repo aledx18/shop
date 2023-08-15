@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum ParentPlatformEnum {
+  PC
+  PlayStation
+  Xbox
+  iOS
+  Android
+  Nintendo
+  Atari
+  SEGA
+  Web
+  Linux
+}
+
+enum GenreEnum {
+  Action
+  Indie
+  Adventure
+  RPG
+  Strategy
+  Shooter
+  Casual
+  Simulation
+  Puzzle
+  Arcade
+  Platformer
+  Racing
+  Sports
+  Fighting
+  Family
+  Card
+  Educational
+}
+
+enum StoreEnum {
+  Steam
+  PlayStationStore
+  XboxStore
+  NintendoStore
+  GooglePlay
+  EpicGames
+  AppStore
+}
+
+model Game {
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  slug              String
+  name              String
+  price             Float
+  description       String
+  stores            Store[]
+  released          String
+  background_image  String
+  rating            Float
+  metacritic        Int
+  updated           String
+  short_screenshots ShortScreenshot[]
+  parent_platforms  ParentPlatform[]
+  genres            Genre[]
+}
+
+model Store {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  games  Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  gameId String @db.ObjectId
+}
+
+model ParentPlatform {
+  id     String             @id @default(auto()) @map("_id") @db.ObjectId
+  gameId String             @db.ObjectId
+  name   ParentPlatformEnum
+  games  Game               @relation(fields: [gameId], references: [id], onDelete: Cascade)
+}
+
+model Genre {
+  id     String    @id @default(auto()) @map("_id") @db.ObjectId
+  gameId String    @db.ObjectId
+  name   GenreEnum
+  games  Game      @relation(fields: [gameId], references: [id], onDelete: Cascade)
+}
+
+model ShortScreenshot {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  gameId String @db.ObjectId
+  image  String
+  games  Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+}
