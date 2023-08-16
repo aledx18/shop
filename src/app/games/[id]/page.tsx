@@ -8,7 +8,9 @@ export default async function GetGameDetail({ params }: any) {
   const data = await getGame(params.id)
   return (
     <>
-      <h1> {data.name} !</h1>
+      <div className='h-screen'>
+        <h1> {data.name} !</h1>
+      </div>
     </>
   )
 }

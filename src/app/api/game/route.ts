@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-import prismadb from '@/lib/prismaDb'
-import { NextResponse } from 'next/server'
 import {
   PrismaClientUnknownRequestError,
   PrismaClientValidationError
@@ -9,22 +7,31 @@ import {
   generarSlug,
   obtenerFechaHoraActual
 } from '@/app/components/DateNowFunct/dateNow'
+import prismadb from '@/lib/prismaDb'
+import { NextResponse } from 'next/server'
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const page = searchParams.get('page')
+  const pageNumber = page ? parseInt(page) : 1
   try {
+    const take = 12
+    const skip = (pageNumber - 1) * take
+
     const games = await prismadb.game.findMany({
+      take,
+      skip,
       include: {
-        short_screenshots: true,
         genres: true,
         parent_platforms: true,
         stores: true,
-        _count: true
+        short_screenshots: true
       }
     })
     return NextResponse.json(games)
   } catch (error) {
     if (error instanceof PrismaClientUnknownRequestError) {
-      return NextResponse.json({ message: 'Error in Db', error: error.name })
+      return NextResponse.json({ message: error.message, error: error.name })
     }
     return NextResponse.json({ message: 'Error', error }, { status: 500 })
   }
