@@ -21,8 +21,6 @@ export default function Loading() {
                 </svg>
               </div>
             </Skeleton>
-
-            {/* <Skeleton className='h-4 w-[250px]' /> */}
           </div>
         ))}
       </div>
