@@ -1,17 +1,18 @@
-import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { Skeleton } from '@/components/ui/skeleton'
 const games = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 
 export default function Loading() {
   return (
-    <div className='flex flex-wrap mx-auto'>
-      {games.map((game, index) => (
-        <div key={index} className='w-full p-2 sm:w-1/2 md:w-1/2 lg:w-1/4 flex'>
-          <AspectRatio ratio={16 / 9}>
-            <Skeleton className='h-full w-full'>
-              <div className='flex items-center justify-center w-full h-full rounded sm:w-96'>
+    <>
+      <div className='flex flex-wrap mx-28'>
+        {games.map((game, index) => (
+          <div
+            key={index}
+            className='grid grid-cols-1 w-full p-1 sm:w-1/2 md:w-1/2 lg:w-1/4'>
+            <Skeleton className='h-60 w-100 justify-center items-center flex'>
+              <div className='flex items-center justify-center rounded'>
                 <svg
-                  className='w-60 h-20 text-gray-500'
+                  className='w-100 h-20 text-gray-500'
                   aria-hidden='true'
                   xmlns='http://www.w3.org/2000/svg'
                   fill='currentColor'
@@ -20,9 +21,11 @@ export default function Loading() {
                 </svg>
               </div>
             </Skeleton>
-          </AspectRatio>
-        </div>
-      ))}
-    </div>
+
+            {/* <Skeleton className='h-4 w-[250px]' /> */}
+          </div>
+        ))}
+      </div>
+    </>
   )
 }

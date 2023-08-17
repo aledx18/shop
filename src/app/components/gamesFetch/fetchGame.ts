@@ -3,7 +3,7 @@ export async function getGames({ page }: { page: number }) {
     cache: 'no-store'
   })
   const data = await res.json()
-  // await new Promise((resolve) => setTimeout(resolve, 3000))
+  // await new Promise((resolve) => setTimeout(resolve, 2000))
   return data
 }
 
