@@ -27,8 +27,8 @@ export default function RootLayout({
         <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
           <div className='h-screen w-full flex'>
             <NavBar />
-            <div className='w-full h-full flex flex-col'>
-              <header className='h-16 w-full flex items-center justify-end px-5'>
+            <div className='w-full flex flex-col'>
+              <header className='w-full flex items-center justify-end p-2'>
                 <div className='flex flex-shrink-0 items-center space-x-2'>
                   <div className='flex flex-col items-end '>
                     <ModeToggle />

@@ -6,3 +6,9 @@ export async function getGames({ page }: { page: number }) {
   // await new Promise((resolve) => setTimeout(resolve, 3000))
   return data
 }
+
+export async function getGameById(id: string) {
+  const res = await fetch(`http://localhost:3000/api/game/${id}`)
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+  return await res.json()
+}

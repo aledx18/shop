@@ -54,7 +54,7 @@ export default function NavBar() {
 
   return (
     <>
-      <aside className='rounded-lg w-20 flex flex-col space-y-10 items-center justify-center relative m-1 bg-[#1c1917] text-white'>
+      <aside className='rounded-sm w-20 flex flex-col space-y-10 items-center justify-center relative bg-[#1c1917] text-white'>
         {navItems.map((item, index) => (
           <Link
             key={index}
