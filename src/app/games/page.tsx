@@ -1,15 +1,18 @@
 import { Suspense } from 'react'
-import Loading from './loading'
-import AllGames from '../components/gamesFetch/AllGames'
-import Pagination from '../components/gamesFetch/pagination'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-export default function GamesView({
+import AllGames from '../components/GamesView/AllGames'
+import Pagination from '../components/GamesView/pagination'
+import LoadingGrid from '../components/GamesView/LoadingGrid'
+
+export default async function GamesView({
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
+  await new Promise((resolve) => setTimeout(resolve, 8000))
+
   const page =
     typeof searchParams.page === 'string' &&
     !isNaN(Number(searchParams.page)) &&
@@ -25,9 +28,11 @@ export default function GamesView({
           <Button type='submit'>Search</Button>
         </div>
       </div>
-      <Suspense fallback={<Loading />}>
+
+      <Suspense fallback={<LoadingGrid />}>
         <AllGames page={page} />
       </Suspense>
+
       <Pagination page={page} />
     </section>
   )

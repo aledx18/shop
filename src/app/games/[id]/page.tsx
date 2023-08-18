@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable @next/next/no-img-element */
-import { getGameById } from '@/app/components/gamesFetch/fetchGame'
+import { getGameById } from '@/app/components/GamesView/fetchGame'
 import {
   Card,
   CardContent,
