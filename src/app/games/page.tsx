@@ -11,8 +11,6 @@ export default async function GamesView({
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  await new Promise((resolve) => setTimeout(resolve, 8000))
-
   const page =
     typeof searchParams.page === 'string' &&
     !isNaN(Number(searchParams.page)) &&
@@ -22,7 +20,7 @@ export default async function GamesView({
 
   return (
     <section className='flex flex-col'>
-      <div className='bg-[#1c1917] my-2 rounded-md p-2 flex justify-end mx-28'>
+      <div className='bg-[#1c1917] my-2 rounded-md p-2 flex justify-end md:mx-28'>
         <div className='flex w-full max-w-sm items-center space-x-2'>
           <Input type='email' placeholder='Search...' />
           <Button type='submit'>Search</Button>

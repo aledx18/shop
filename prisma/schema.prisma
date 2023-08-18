@@ -18,6 +18,7 @@ enum ParentPlatformEnum {
   SEGA
   Web
   Linux
+  Mac
 }
 
 enum GenreEnum {
@@ -38,6 +39,7 @@ enum GenreEnum {
   Family
   Card
   Educational
+  Massively_multiplayer
 }
 
 enum StoreEnum {
@@ -65,6 +67,7 @@ model Game {
   short_screenshots ShortScreenshot[]
   parent_platforms  ParentPlatform[]
   genres            Genre[]
+  video             String
 }
 
 model Store {

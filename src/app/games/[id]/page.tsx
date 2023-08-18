@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable camelcase */
 /* eslint-disable @next/next/no-img-element */
 import { getGameById } from '@/app/components/GamesView/fetchGame'
@@ -23,8 +24,13 @@ export default async function GetGameDetail({ params }: any) {
     metacritic,
     rating,
     stores,
-    released
+    parent_platforms,
+    released,
+    video
   }: Game = await getGameById(params.id)
+
+  const end = video !== 'Null' ? 4 : 5
+
   return (
     <section className='text-gray-400 container mt-1 items-center flex'>
       <div className=' mx-auto flex flex-wrap'>
@@ -37,7 +43,7 @@ export default async function GetGameDetail({ params }: any) {
             />
           </div>
           <div className='flex flex-wrap w-2/3'>
-            {short_screenshots.slice(1, 5).map((item) => (
+            {short_screenshots.slice(1, end).map((item) => (
               <div key={item.id} className='md:p-2 p-1 w-1/4 '>
                 <img
                   src={item.image}
@@ -46,6 +52,21 @@ export default async function GetGameDetail({ params }: any) {
                 />
               </div>
             ))}
+            {video !== 'Null' ? (
+              <div className='md:p-2 p-1 w-1/4 '>
+                <video
+                  src={video}
+                  autoPlay
+                  loop
+                  muted
+                  width={210}
+                  height={400}
+                  className='rounded-md transition-transform duration-300 ease-in-out hover:scale-125'
+                />
+              </div>
+            ) : (
+              <></>
+            )}
             <div className='flex flex-col'>
               <h4 className='py-2 text-2xl font-semibold'>About the game</h4>
               <p className='text-md py-2 text-gray-300'>{description}</p>
@@ -88,9 +109,15 @@ export default async function GetGameDetail({ params }: any) {
                   <h4 className=' text-[#22c55e] '>
                     Platforms:{' '}
                     <span className='text-sm flex text-gray-200'>
-                      {stores.map((item) => item.name).join(', ')}
+                      {parent_platforms.map((item) => item.name).join(', ')}
                     </span>
                   </h4>
+                  <div className='flex items-center text-[#22c55e] '>
+                    Store:{' '}
+                    <span className='text-sm text-gray-200'>
+                      {stores.map((item) => item.name).join(', ')}
+                    </span>
+                  </div>
                 </div>
               </CardFooter>
             </Card>

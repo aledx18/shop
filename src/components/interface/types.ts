@@ -15,6 +15,7 @@ export interface Game {
   price: number
   description: string
   released: string
+  video: string
   background_image: string
   rating: number
   metacritic: number

@@ -49,12 +49,14 @@ export async function POST(request: Request) {
     short_screenshots,
     genres,
     stores,
-    parent_platforms
+    parent_platforms,
+    video
   } = await request.json()
   try {
     const game = await prismadb.game.create({
       data: {
         name,
+        video,
         metacritic,
         price,
         rating,
@@ -96,3 +98,89 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: 'err', error }, { status: 500 })
   }
 }
+
+// export async function GET() {
+//   try {
+//     const games = await fetch(
+//       'https://api.rawg.io/api/games?dates=2013-01-01%2C2022-12-31&key=914982c38be948199378f6cd3d11684d&ordering=-added&page=4&page_size=20'
+//     )
+//       .then((response) => response.json())
+//       .then(async (data) => {
+//         const gamesWith = []
+
+//         for (let i = 0; i < data.results.length; i++) {
+//           const game = data.results[i]
+//           const slug = game.slug
+//           const gameDescResponse = await fetch(
+//             `https://api.rawg.io/api/games/${slug}?key=914982c38be948199378f6cd3d11684d`
+//           )
+//           const gameDescData = await gameDescResponse.json()
+//           const gameIdvideo = game.id
+//           const videoFetch = await fetch(
+//             `https://api.rawg.io/api/games/${gameIdvideo}/movies?key=914982c38be948199378f6cd3d11684d`
+//           )
+//           const videoGame = await videoFetch.json()
+
+//           const gameWithDesc = {
+//             slug: game.slug,
+//             video:
+//               videoGame.results.length > 0
+//                 ? videoGame.results[0].data.max
+//                 : 'Null',
+//             name: game.name,
+//             released: game.released,
+//             background_image: game.background_image,
+//             rating: game.rating,
+//             metacritic: game.metacritic || Math.round(Math.random() * 30) + 50,
+//             updated: game.updated,
+//             price: +(Math.random() * (45.5 - 3.9) + 3.9).toFixed(2),
+//             stores: {
+//               create: game.stores.map((sto: any) => ({
+//                 name: sto.store.name
+//               }))
+//             },
+//             short_screenshots: {
+//               create: game.short_screenshots.map((img: any) => ({
+//                 image: img.image
+//               }))
+//             },
+//             parent_platforms: {
+//               create: game.parent_platforms.map((pt: any) => ({
+//                 name:
+//                   pt.platform.name === 'Apple Macintosh'
+//                     ? 'Mac'
+//                     : pt.platform.name
+//               }))
+//             },
+//             genres: {
+//               create: game.genres.map((gen: any) => ({
+//                 name:
+//                   gen.name === 'Massively Multiplayer'
+//                     ? 'Massively_multiplayer'
+//                     : gen.name
+//               }))
+//             },
+//             description: gameDescData.description_raw
+//           }
+//           gamesWith.push(gameWithDesc)
+//         }
+
+//         return gamesWith
+//       })
+
+//     for (const game of games) {
+//       await prismadb.game.create({
+//         data: game
+//       })
+//     }
+//     return NextResponse.json(games)
+//   } catch (error) {
+//     if (error instanceof PrismaClientValidationError) {
+//       return NextResponse.json({
+//         message: error.message,
+//         error: error.name
+//       })
+//     }
+//     return NextResponse.json({ message: 'err', error }, { status: 500 })
+//   }
+// }

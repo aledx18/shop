@@ -11,6 +11,7 @@ import {
   IconNintendo
 } from '@/components/icons/icons'
 import { FC } from 'react'
+import Image from 'next/image'
 
 interface PlatformIconProps {
   w: string
@@ -30,7 +31,7 @@ export default async function AllGames({ page }: { page: number }) {
   }
   return (
     <>
-      <div className='flex flex-wrap mx-28'>
+      <div className='flex flex-wrap lg:mx-28'>
         {games.map((game: Game) => (
           <div
             key={game.id}
@@ -67,10 +68,18 @@ export default async function AllGames({ page }: { page: number }) {
               </div>
             </div>
             <div className='grid gap-4 col-start-1 col-end-3 row-start-1 '>
-              <img
+              {/* <img
                 src={game.background_image}
                 alt=''
                 className='w-100 h-60 object-cover rounded-lg bg-[#212124]'
+                loading='lazy'
+              /> */}
+              <Image
+                src={game.background_image}
+                alt={game.slug}
+                width={390}
+                height={100}
+                className='object-cover w-100 h-60 rounded-lg bg-[#212124]'
                 loading='lazy'
               />
             </div>
