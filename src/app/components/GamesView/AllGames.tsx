@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { Game } from '@/components/interface/types'
-import { getGames } from './fetchGame'
 import Link from 'next/link'
 
 import {
@@ -18,16 +17,8 @@ interface PlatformIconProps {
   h: string
 }
 
-export default async function AllGames({
-  page,
-  slug,
-  orderBy
-}: {
-  page: number
-  slug: string
-  orderBy: string
-}) {
-  const games = await getGames({ page, slug, orderBy })
+export default async function AllGames({ games }: { games: Game[] }) {
+  // const games = await getGames({ page, slug, orderBy })
 
   type PlatformIconComponent = FC<PlatformIconProps>
   const platformIcons: Record<string, PlatformIconComponent> = {

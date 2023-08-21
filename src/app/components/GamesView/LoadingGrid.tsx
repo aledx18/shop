@@ -1,9 +1,9 @@
 import { Skeleton } from '@/components/ui/skeleton'
-const games = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+
 export default function LoadingGrid() {
   return (
     <div className='flex flex-wrap mx-20'>
-      {games.map((game, index) => (
+      {[...Array(12)].map((game, index) => (
         <div
           key={index}
           className='grid grid-cols-1 w-full p-1 sm:w-1/2 md:w-1/2 lg:w-1/4'>

@@ -6,6 +6,8 @@ import Pagination from '../components/GamesView/pagination'
 import LoadingGrid from '../components/GamesView/LoadingGrid'
 import Search from '../components/GamesView/Search'
 import Order from '../components/GamesView/Order'
+import Await from '../components/GamesView/await'
+import { getGames } from '../components/GamesView/fetchGame'
 
 export default async function GamesView({
   searchParams
@@ -23,6 +25,8 @@ export default async function GamesView({
   const orderBy =
     typeof searchParams.orderBy === 'string' ? searchParams.orderBy : ''
 
+  const promise = getGames({ page, slug, orderBy })
+
   return (
     <section className='flex flex-col'>
       <div className='bg-[#1c1917] my-2 rounded-md p-2 flex justify-between lg:mx-20'>
@@ -31,7 +35,10 @@ export default async function GamesView({
       </div>
 
       <Suspense fallback={<LoadingGrid />}>
-        <AllGames orderBy={orderBy} page={page} slug={slug} />
+        <Await promise={promise}>
+          {(props) => <AllGames games={props} />}
+          {/* <AllGames orderBy={orderBy} page={page} slug={slug} /> */}
+        </Await>
       </Suspense>
       <Pagination page={page} orderBy={orderBy} />
     </section>
