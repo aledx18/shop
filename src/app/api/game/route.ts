@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable camelcase */
 import {
   PrismaClientUnknownRequestError,
@@ -11,16 +12,38 @@ import prismadb from '@/lib/prismaDb'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const page = searchParams.get('page')
-  const pageNumber = page ? parseInt(page) : 1
   try {
+    const { searchParams } = new URL(request.url)
+
+    const slug = searchParams.get('slug')
+    const page = searchParams.get('page')
+    const paramsOrder = searchParams.get('orderBy')
+
+    const ascDesc = paramsOrder === 'released' ? 'desc' : 'asc'
+
+    const orderBy =
+      paramsOrder === 'name'
+        ? paramsOrder
+        : paramsOrder === 'released'
+        ? 'released'
+        : 'relevance'
+
+    const pageNumber = page ? parseInt(page) : 1
     const take = 12
     const skip = (pageNumber - 1) * take
 
     const games = await prismadb.game.findMany({
+      orderBy: orderBy !== 'relevance' ? { [orderBy]: ascDesc } : undefined,
       take,
       skip,
+      where: slug
+        ? {
+            slug: {
+              startsWith: slug,
+              mode: 'insensitive'
+            }
+          }
+        : undefined,
       include: {
         genres: true,
         parent_platforms: true,
@@ -28,12 +51,17 @@ export async function GET(request: Request) {
         short_screenshots: true
       }
     })
+
     return NextResponse.json(games)
   } catch (error) {
-    if (error instanceof PrismaClientUnknownRequestError) {
-      return NextResponse.json({ message: error.message, error: error.name })
-    }
-    return NextResponse.json({ message: 'Error', error }, { status: 500 })
+    const errorMessage =
+      error instanceof PrismaClientUnknownRequestError
+        ? { message: error.message, error: error.name }
+        : { message: 'Error', error }
+
+    return NextResponse.json(errorMessage, {
+      status: error instanceof PrismaClientUnknownRequestError ? 400 : 500
+    })
   }
 }
 

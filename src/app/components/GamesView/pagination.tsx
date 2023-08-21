@@ -1,13 +1,22 @@
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 
-export default function Pagination({ page }: { page: number }) {
+export default function Pagination({
+  page,
+  orderBy
+}: {
+  page: number
+  orderBy: string
+}) {
+  const nextPage = page + 1
+
   return (
     <div className='flex p-2 gap-1 justify-center'>
       <Link
         href={{
           pathname: '/games',
           query: {
+            ...(orderBy ? { orderBy } : {}),
             page: page - 1
           }
         }}
@@ -22,12 +31,13 @@ export default function Pagination({ page }: { page: number }) {
         href={{
           pathname: '/games',
           query: {
-            page: page + 1
+            ...(orderBy ? { orderBy } : {}),
+            page: nextPage
           }
         }}
         className={
           buttonVariants({ variant: 'outline' }) +
-          (page === 9 ? ' pointer-events-none opacity-50' : '')
+          (page === 7 ? ' pointer-events-none opacity-50' : '')
         }>
         Next
       </Link>

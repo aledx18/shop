@@ -18,8 +18,16 @@ interface PlatformIconProps {
   h: string
 }
 
-export default async function AllGames({ page }: { page: number }) {
-  const games = await getGames({ page })
+export default async function AllGames({
+  page,
+  slug,
+  orderBy
+}: {
+  page: number
+  slug: string
+  orderBy: string
+}) {
+  const games = await getGames({ page, slug, orderBy })
 
   type PlatformIconComponent = FC<PlatformIconProps>
   const platformIcons: Record<string, PlatformIconComponent> = {
@@ -31,11 +39,11 @@ export default async function AllGames({ page }: { page: number }) {
   }
   return (
     <>
-      <div className='flex flex-wrap lg:mx-28'>
+      <div className='flex flex-wrap lg:mx-20'>
         {games.map((game: Game) => (
           <div
             key={game.id}
-            className='grid grid-cols-1 p-1 sm:w-1/2 md:w-1/2 lg:w-1/4 mx-auto'>
+            className='grid grid-cols-1 p-1 sm:w-1/2 md:w-1/2 lg:w-1/4'>
             <div className='relative p-3 col-start-1 row-start-1 flex flex-col-reverse rounded-lg bg-gradient-to-t from-[#0c0a09]/100 via-black/10 hover:via-[#0c0a09]/80'>
               <Link href={`/games/${game.id}`}>
                 <div className='flex justify-between items-center'>
@@ -68,18 +76,12 @@ export default async function AllGames({ page }: { page: number }) {
               </div>
             </div>
             <div className='grid gap-4 col-start-1 col-end-3 row-start-1 '>
-              {/* <img
-                src={game.background_image}
-                alt=''
-                className='w-100 h-60 object-cover rounded-lg bg-[#212124]'
-                loading='lazy'
-              /> */}
               <Image
                 src={game.background_image}
                 alt={game.slug}
                 width={390}
                 height={100}
-                className='object-cover w-100 h-60 rounded-lg bg-[#212124]'
+                className='object-cover w-auto max-h-60 rounded-lg bg-[#212124]'
                 loading='lazy'
               />
             </div>

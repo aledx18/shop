@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 const games = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 export default function LoadingGrid() {
   return (
-    <div className='flex flex-wrap mx-28'>
+    <div className='flex flex-wrap mx-20'>
       {games.map((game, index) => (
         <div
           key={index}
