@@ -72,8 +72,7 @@ export default async function AllGames({ games }: { games: Game[] }) {
                 alt={game.slug}
                 width={390}
                 height={100}
-                className='object-cover w-auto max-h-60 rounded-lg bg-[#212124]'
-                loading='lazy'
+                className='object-cover w-auto h-60 rounded-lg bg-[#212124]'
               />
             </div>
           </div>

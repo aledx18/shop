@@ -2,11 +2,11 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function LoadingGrid() {
   return (
-    <div className='flex flex-wrap mx-20'>
+    <div className='flex flex-wrap lg:mx-20'>
       {[...Array(12)].map((game, index) => (
         <div
           key={index}
-          className='grid grid-cols-1 w-full p-1 sm:w-1/2 md:w-1/2 lg:w-1/4'>
+          className='grid grid-cols-1 p-1 sm:w-1/2 md:w-1/2 lg:w-1/4'>
           <Skeleton className='h-60 w-100 justify-center items-center flex'>
             <div className='flex items-center justify-center rounded'>
               <svg

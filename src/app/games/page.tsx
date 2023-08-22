@@ -34,12 +34,11 @@ export default async function GamesView({
         <Search slug={slug} />
       </div>
 
-      <Suspense fallback={<LoadingGrid />}>
-        <Await promise={promise}>
-          {(props) => <AllGames games={props} />}
-          {/* <AllGames orderBy={orderBy} page={page} slug={slug} /> */}
-        </Await>
+      <Suspense key={page} fallback={<LoadingGrid />}>
+        <Await promise={promise}>{(props) => <AllGames games={props} />}</Await>
+        {/* <AllGames orderBy={orderBy} page={page} slug={slug} /> */}
       </Suspense>
+
       <Pagination page={page} orderBy={orderBy} />
     </section>
   )
