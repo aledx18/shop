@@ -1,37 +1,39 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useDebounce } from 'use-debounce'
 
 const Search = ({ slug }: { slug?: string }) => {
   const router = useRouter()
+  const initialRender = useRef(true)
 
   const [text, setText] = useState(slug)
+  const [query] = useDebounce(text, 800)
 
-  function handdleSubmit() {
-    if (!text) {
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false
       return
     }
-    router.push(`/games?slug=${text}`)
-  }
+
+    if (!query) {
+      router.push('/games')
+    } else {
+      router.push(`/games?slug=${query}`)
+    }
+  }, [query])
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        handdleSubmit()
-      }}
-      className='flex space-x-2'>
+    <div className='flex '>
       <Input
         value={text}
         type='search'
         placeholder='Search...'
         onChange={(e) => setText(e.target.value)}
       />
-      <Button type='submit'>Search</Button>
-    </form>
+    </div>
   )
 }
 

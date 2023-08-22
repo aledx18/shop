@@ -27,6 +27,7 @@ specifiers:
   tailwindcss: 3.3.3
   tailwindcss-animate: ^1.0.6
   typescript: 5.1.6
+  use-debounce: 9.0.4
 
 dependencies:
   '@prisma/client': 5.1.1_prisma@5.1.1
@@ -52,6 +53,7 @@ dependencies:
   tailwindcss: 3.3.3
   tailwindcss-animate: 1.0.6_tailwindcss@3.3.3
   typescript: 5.1.6
+  use-debounce: 9.0.4_react@18.2.0
 
 devDependencies:
   prettier: 3.0.1
@@ -3260,6 +3262,15 @@ packages:
       '@types/react': 18.2.19
       react: 18.2.0
       tslib: 2.6.1
+    dev: false
+
+  /use-debounce/9.0.4_react@18.2.0:
+    resolution: {integrity: sha512-6X8H/mikbrt0XE8e+JXRtZ8yYVvKkdYRfmIhWZYsP8rcNs9hk3APV8Ua2mFkKRLcJKVdnX2/Vwrmg2GWKUQEaQ==}
+    engines: {node: '>= 10.0.0'}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /use-sidecar/1.1.2_6kgymidexis2l23kiss4by6rqm:
